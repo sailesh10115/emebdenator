@@ -1,26 +1,29 @@
 const { MessageEmbed } = require('discord.js');
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (client, message, args) => {
   await message.channel.send(`What do you want the title to be?`)
-  let answer = await message.channel.awaitMessages(answer => answer.author.id != bot.user.id, { max: 1 });
+  let answer = await message.channel.awaitMessages(answer => answer.author.id != client.user.id, { max: 1 });
   const title = (answer.map(answers => answers.content).join());
 
   await message.channel.send(`What do you want the description to be?`)
-  answer = await message.channel.awaitMessages(answer => answer.author.id != bot.user.id, { max: 1 });
+  answer = await message.channel.awaitMessages(answer => answer.author.id != client.user.id, { max: 1 });
   const description = (answer.map(answers => answers.content).join());
 
   message.channel.send(`What do you want the Color to be? (Please send generic names or codes | Also respond in ALL CAPS)`)
-  answer = await message.channel.awaitMessages(answer => answer.author.id != bot.user.id, { max: 1 });
+  answer = await message.channel.awaitMessages(answer => answer.author.id != client.user.id, { max: 1 });
   const color = (answer.map(answers => answers.content).join());
 
   message.channel.send(`Thumbnail LINK (Type "none" if you don't want to use a thumbnail)`)
-  answer = await message.channel.awaitMessages(answer => answer.author.id != bot.user.id, { max: 1 });
+  answer = await message.channel.awaitMessages(answer => answer.author.id != client.user.id, { max: 1 });
   const Thumbnail = (answer.map(answers => answers.content).join())
 
   if (Thumbnail === 'none') {
     message.channel.send(`What do you want the footer to be?`)
-    answer = await message.channel.awaitMessages(answer => answer.author.id != bot.user.id, { max: 1 });
+    answer = await message.channel.awaitMessages(answer => answer.author.id != client.user.id, { max: 1 });
     const footer = (answer.map(answers => answers.content).join());
+
+    message.channel.bulkDelete('11')
+
     const embed = new MessageEmbed()
       .setTitle(`${title}`)
       .setDescription(`${description}`)
@@ -30,8 +33,10 @@ module.exports.run = async (bot, message, args) => {
     message.channel.send(embed).catch(error => message.reply(`An error occured. Please make sure everything is correct & re-submit.`))
   } else {
     message.channel.send(`What do you want the footer to be?`)
-    answer = await message.channel.awaitMessages(answer => answer.author.id != bot.user.id, { max: 1 });
+    answer = await message.channel.awaitMessages(answer => answer.author.id != client.user.id, { max: 1 });
     const footer = (answer.map(answers => answers.content).join());
+
+    message.channel.bulkDelete('11')
     
     const embed = new MessageEmbed()
       .setTitle(`${title}`)
